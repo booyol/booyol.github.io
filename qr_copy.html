@@ -1,0 +1,37 @@
+<head>
+<script>
+function copyImage(data) {
+    copyImgToClipboard('https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + data)
+}
+
+async function copyImgToClipboard(imgUrl) {
+  try {
+    console.log(imgUlr);
+    const data = await fetch(imgUrl);
+    imgCap.src = imgUrl;
+    const blob = await data.blob();
+    await navigator.clipboard.write([
+      new ClipboardItem({[blob.type]: blob,}),
+      ]);
+    console.log('copied');
+  }
+  catch (err) {
+    console.error(err.name, err.message);
+  }
+}
+
+const url = new URL(window.location.href);
+console.log(url);
+const urlParams = url.searchParams;
+const data = urlParams.get('data');
+
+console.log(data);
+copyImage(data);
+
+
+</script>
+</head>
+<body>
+<img src="" id="imgCap">
+</body>
+</html>
