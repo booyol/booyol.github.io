@@ -6,7 +6,7 @@ function copyImage(data) {
 
 async function copyImgToClipboard(imgUrl) {
   try {
-    console.log(imgUlr);
+    console.log(imgUrl);
     const data = await fetch(imgUrl);
     imgCap.src = imgUrl;
     const blob = await data.blob();
