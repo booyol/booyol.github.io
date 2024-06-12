@@ -1,0 +1,40 @@
+<head>
+<script>
+function copyImage(style, width, height, text) {
+    copyImgToClipboard('https://genqrcode.com/embedded?style=' + style + '&width=' + width + '&height=' + height + '&text=' + text);
+}
+
+async function copyImgToClipboard(imgUrl) {
+  try {
+    console.log(imgUrl);
+    const data = await fetch(imgUrl);
+    imgCap.src = imgUrl;
+    const blob = await data.blob();
+    await navigator.clipboard.write([
+      new ClipboardItem({[blob.type]: blob,}),
+      ]);
+    console.log('copied');
+  }
+  catch (err) {
+    console.error(err.name, err.message);
+  }
+}
+
+const url = new URL(window.location.href);
+console.log(url);
+const urlParams = url.searchParams;
+const style = urlParams.get('style');
+const width = urlParams.get('width');
+const height = urlParams.get('height');
+const text = urlParams.get('text');
+
+console.log(style, width, height, text);
+copyImage(data);
+
+
+</script>
+</head>
+<body>
+<img src="" id="imgCap">
+</body>
+</html>
