@@ -1,0 +1,48 @@
+
+<head>
+    </head>
+    <body>
+    <img src="" id="imgCap">
+
+    <script>
+	function sleep(sec) {
+		let start = Date.now(), now = start;
+		while (now - start < sec * 1000) {
+			now = Date.now();
+		}
+	}
+
+    function copyImage(size, text) {
+        copyImgToClipboard('https://quickchart.io/qr?text=' + text + '&size=' + size);
+    }
+
+    async function copyImgToClipboard(imgUrl) {
+      try {
+        console.log(imgUrl);
+        const data = await fetch(imgUrl);
+        imgCap.src = imgUrl;
+        const blob = await data.blob();
+        await navigator.clipboard.write([
+          new ClipboardItem({[blob.type]: blob,}),
+          ]);
+        console.log('copied');
+        sleep(2);
+        window.close();
+      }
+      catch (err) {
+        console.error(err.name, err.message);
+      }
+    }
+
+    const url = new URL(window.location.href);
+    console.log(url);
+    const urlParams = url.searchParams;
+    const size = urlParams.get('size');
+    const text = urlParams.get('text');
+
+    console.log(size, text);
+    copyImage(size, text);
+
+    </script>
+    </body>
+    </html>
